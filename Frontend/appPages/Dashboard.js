@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
-import { Dirs, FileSystem } from 'react-native-file-access';
-import '../shim.js'
 import {
     Button,
     Dimensions,
@@ -15,8 +13,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity} from 'react-native';
-
-import {Picker} from '@react-native-community/picker'
+import {Picker} from '@react-native-community/picker';
 import { SearchBar } from 'react-native-elements';
 
 //Place Holder
@@ -33,43 +30,50 @@ export function normalize(size) {
 }
 
 const showBooks = (id) => {
-    // const path = require('path');
-    // const fs = require("fs");
-    // var userpath = path.resolve('C:\Users\secho\eBook\books');
+    const bookdata = require('../bookdata.json');
+    //console.log(bookdata);
+    //console.log(typeof bookdata);
+    // for (let bookdata of this.state.users) {
+    //     console.log(bookdata.title);
+    // }
 
-    // console.log(userpath);
-    // let directory_name = userpath;
-    
-    // // Function to get current filenames
-    // // in directory
-    // let filenames = fs.readdir(directory_name, (err) => {
-    //     if(err) throw err;
-    // });
-
-    // // let filenames = fs.readdirSync(directory_name);
-    
-    // console.log("\nFilenames in directory:");
-    // //looping through imagese to check for image with same input id
-    // filenames.forEach((file) => {
-    //     console.log("File:", file);
-    //     // if(file === id + ".jpg") {
-    //     //     //convert image to base64 string
-    //     //     img_base64 = base64_encode("./covers/" + file);
-    //     // }
-    // });
-
-    // //rethink; file systems might be different for android vs ios (instead of directory, have it be single json files)
-    // let src = '../books/' + id + '/cover.jpg';
-    var path = '../books/' + id + '/cover.jpg';
-    return <Image style={styles.book} source={require(path)}/>;
+    var titles = [];
+    var authors = [];
+    bookdata.forEach(
+        function(d) {
+            titles.push(d.title);
+            authors.push(d.author);
+        }
+    )
+    //console.log(titles);
+    var htmlreturns = [];
+    var colors = ["#666A86", "#788AA3", "#92B6B1", "#B2C9AB", "#E8DDB5"];
+    for(var i = 0; i < titles.length; i++) {
+        var randColor = colors[Math.floor(Math.random() * colors.length)];
+        htmlreturns.push(
+            <TouchableOpacity
+                style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    //alignItems: 'center',
+                    //justifyContent: 'center',
+                    textAlign: 'center',
+                    backgroundColor: "#DDDDDD",
+                    padding: normalize(5),
+                    margin: normalize(5),
+                    height: normalize(50),
+                    width: normalize(300),
+                    justifyContent: 'space-evenly',
+                    backgroundColor: randColor + "",
+                }}
+            >
+                <Text>{titles[i]}</Text>
+                <Text>{authors[i]}</Text>
+            </TouchableOpacity>
+        );
+    }
+    return htmlreturns;
 }
-
-/*
-react native file system (react native)
-fs (nodejs)
-
-id (function parameters)
-*/
 
 export const Dashboard = ({navigation}) => {
     const [selectedValue,setSelectedValue]=useState("author");
@@ -116,7 +120,7 @@ export const Dashboard = ({navigation}) => {
                 </View>
                 <ScrollView>
                     <View style={styles.bookContainer}>
-                        {showBooks("01121571")}
+                        {showBooks()}
                         {/* <TouchableOpacity>
                             {showBooks("01121576")}
                         </TouchableOpacity> */}
@@ -138,6 +142,19 @@ export const Dashboard = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    button: {
+        flex: 1,
+        flexDirection: 'column',
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        textAlign: 'center',
+        backgroundColor: "#DDDDDD",
+        padding: normalize(5),
+        margin: normalize(5),
+        height: normalize(50),
+        width: normalize(300),
+        justifyContent: 'space-evenly',
+    },
     buttonRow:{
         flexDirection:'row',
         justifyContent:'center',
@@ -150,7 +167,7 @@ const styles = StyleSheet.create({
         marginBottom:normalize(20),
     },
     bookContainer:{
-        flexDirection:'row',
+        flexDirection:'column',
     },
     container:{
         flex:1,
