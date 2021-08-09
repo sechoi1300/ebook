@@ -31,7 +31,7 @@ Collections List:
 Edit Collections:
 
 ```markdown
-![Image](https://github.com/FTN2021/ebook/blob/main/images/Collections%20Open.png?raw=true)
+![Image](https://raw.githubusercontent.com/FTN2021/ebook/main/images/Collections%20Open.png)
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
