@@ -4,9 +4,7 @@
 
 Returning Users:
 
-```markdown
 ![Image](https://github.com/FTN2021/ebook/blob/main/images/Login.png)
-```
 
 New Users:
 
